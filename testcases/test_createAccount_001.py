@@ -130,7 +130,7 @@ class TestCreationAndSignin:
             print(displayed_list, links_to_list)
 
         assert title_of_pages == displayed_list, self.logger.info("**** TEST FAILED *****")
-        self.logger.info("***** TEST SUCCESSFUL *****")
+        self.logger.info("***** TEST SUCCESSFULLY DONE *****")
 
 
 
