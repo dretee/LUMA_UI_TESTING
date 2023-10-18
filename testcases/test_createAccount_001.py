@@ -1,7 +1,8 @@
 import time
 from selenium.webdriver.common.by import By
-from PageObjects.createAccountObjects import accountCreationObjects
-from Utilities.recordLogger import recordLogger
+from Utilities.recordLogger import recordLogger  # Assuming this is your custom logger module
+from PageObjects.createAccountObjects import \
+    accountCreationObjects  # Assuming this is your custom class for account creation
 
 
 class TestCreationAndSignin:
@@ -10,12 +11,15 @@ class TestCreationAndSignin:
     EXISTING_PASSWORD = "Ubong123?"
     logger = recordLogger.log_generator_info()
 
+    # Method to log the start of a test
     def log_test_start(self, test_name):
         self.logger.info(f"****** STARTING TEST: {test_name} ******")
 
+    # Method to log the end of a test
     def log_test_end(self, test_name):
         self.logger.info(f"****** ENDING TEST: {test_name} ******")
 
+    # Method to open the website
     def open_website(self, setup):
         self.log_test_start("Open Website")
         self.driver = setup
@@ -23,6 +27,8 @@ class TestCreationAndSignin:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
+    ## VERIFICATION METHODS
+    # Method to verify account creation
     def verify_account_creation(self, displayed_username, email):
         self.logger.info("**** VERIFICATION PROCESS ****")
         self.AO.createButton()
@@ -33,11 +39,9 @@ class TestCreationAndSignin:
         time.sleep(2)
         assert displayed_username in body_text, self.logger.info("****** ACCOUNT CREATION FAILED *****")
         self.logger.info("****** USERNAME IS IN THE BODY OF THE PAGE ****")
-        time.sleep(2)
-        # assert "Thank you for registering with Main Website Store." in body_text, self.logger.info("****** ACCOUNT CREATION FAILED *****")
-        # self.logger.info("****** MESSAGE SEEN IN THE BODY OF THE PAGE ****")
         self.logger.info("****** ACCOUNT SUCCESSFULLY CREATED ****")
 
+    # Method to verify invalid names during account creation
     def verify_invalid_names(self, setup, firstname, lastname, email):
         self.logger.info("**** VERIFICATION PROCESS ***")
         self.AO = accountCreationObjects(self.driver)
@@ -52,15 +56,20 @@ class TestCreationAndSignin:
         self.logger.info(
             f"***** TEST PASSED: No account was created with invalid names: {firstname}, {lastname} ******")
 
+    # Method to verify creation of an account with existing user's email
     def verify_existing_user_creation(self):
         self.logger.info("**** VERIFICATION PROCESS ***")
         self.AO.createButton()
         body_text = self.driver.find_element(By.TAG_NAME, "body").text
-        assert "There is already an account with this email address." in body_text, \
+        assert "There is already an account with this email address. If you are sure that it is your email address, " in body_text, \
             self.logger.info("*** TEST FAILED: Another account was created for the user ***")
         self.logger.info("***** TEST PASSED: No account was created for the user ******")
 
-    def est_valid_details_account_creation_01(self, setup):
+    ## VERIFICATION METHODS
+
+    ## TESTING METHODS
+    # Test for creating an account with valid details
+    def test_valid_details_account_creation_01(self, setup):
         self.log_test_start("******* Valid Details Account Creation *******")
         self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
@@ -75,7 +84,8 @@ class TestCreationAndSignin:
         self.driver.quit()
         self.log_test_end("Valid Details Creation")
 
-    def est_multiple_accounts_for_existing_user_02(self, setup):
+    # Test for creating multiple accounts with an existing user's email
+    def test_multiple_accounts_for_existing_user_02(self, setup):
         self.log_test_start("Multiple Accounts for Existing User")
         self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
@@ -84,33 +94,35 @@ class TestCreationAndSignin:
         self.AO.inputEmail(self.EXISTING_EMAIL)
         self.AO.inputPasswords(self.EXISTING_PASSWORD)
         self.verify_existing_user_creation()
-        self.driver.quit()
         self.log_test_end("Multiple Accounts for Existing User")
+        self.driver.quit()
 
-    def est_invalid_names_creation_03(self, setup):
-        self.log_test_start("Test for the creation of an account with an Invalid Names(integer)")
+    # Test for creating an account with invalid names (integer)
+    def test_invalid_names_creation_03(self, setup):
+        self.log_test_start("Test for the creation of an account with invalid names (integer)")
         self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
         self.verify_invalid_names(setup, "12300", "5672222", self.AO.email_generator())
+        self.driver.quit()
 
-    def est_invalid_names_creation_with_special_charters_04(self, setup):
-        self.log_test_start("Test for the creation of an account with an Invalid Names(special charters)")
+    # Test for creating an account with invalid names (special characters)
+    def test_invalid_names_creation_with_special_charters_04(self, setup):
+        self.log_test_start("Test for the creation of an account with invalid names (special characters)")
         self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
         self.verify_invalid_names(setup, "TR1?EY", "UG&OTE", self.AO.email_generator())
         self.log_test_end("Invalid Names Creation")
+        self.driver.quit()
 
+    # Test for verifying links on the welcome page
     def test_welcome_page_links_05(self, setup):
-        ## we will check all the links on the page to and verify the content on the pages that will be opened
-        # a list of what the result should give will aid this.
-        # The content of the list will be the string of all the text of the page
         self.log_test_start("******* Test for the welcome page *******")
         self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
         title_of_pages = ["My Account", "My Orders", "My Downloadable Products",
-                          "My Wish List", "Add New Address", "Edit Account Information",
+                          "My Wish List", "Add New Address", "Account Information",
                           "Stored Payment Methods", "My Product Reviews"]
-        # log in and go to the welcome page
+        # Log in and go to the welcome page
         self.AO.path_to_signinButton()
         self.AO.emailSignin("ubongphilip2200@gmail.com")
         self.AO.passwordSignin("Ubong123?")
@@ -120,21 +132,9 @@ class TestCreationAndSignin:
         self.AO.log_dropdown("my account")
         time.sleep(3)
 
-        # verification and appending to a list begins
-        displayed_list = [self.driver.title]
-        print(displayed_list)
-        links_to_list = self.AO.list_of_prompt_on_welcomepage()
-        for link in links_to_list:
-            link.click()
-            displayed_list.append(self.driver.title)
-            print(displayed_list, links_to_list)
-
-        assert title_of_pages == displayed_list, self.logger.info("**** TEST FAILED *****")
+        # Verification and appending to a list begin
+        list_of_all_page_title = self.AO.list_of_prompt_on_welcomepage()
+        print(list_of_all_page_title)
+        assert title_of_pages == list_of_all_page_title, self.logger.info("**** TEST FAILED *****")
+        self.driver.quit()
         self.logger.info("***** TEST SUCCESSFULLY DONE *****")
-
-
-
-
-
-
-
