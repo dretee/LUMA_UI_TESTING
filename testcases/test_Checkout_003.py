@@ -4,7 +4,7 @@ from PageObjects.createAccountObjects import accountCreationObjects
 from Utilities.recordLogger import recordLogger
 
 
-class Test_cart_002:
+class Test_checkout_003:
 
     URL = "https://magento.softwaretestingboard.com"
     EXISTING_EMAIL = "ubongphilip2200@gmail.com"
@@ -24,7 +24,4 @@ class Test_cart_002:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def test_for_links_on_page_women(self, setup):
-        self.log_test_start("**** TEST FOR THE LINKS ON THE WOMEN PAGE ****")
-        self.open_website(setup)
-        self.AO =
+
