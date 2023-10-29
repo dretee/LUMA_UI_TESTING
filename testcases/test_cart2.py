@@ -28,12 +28,6 @@ class Test_cart_002:
         self.driver.get(self.URL)
         self.driver.maximize_window()
         self.log_test_end("Open Website")
-
-    def MenCatalog(self, setup):
-        self.log_test_start("******* Test for the welcome page *******")
-        # initiate browser
-        # navigate to the webpage
-        self.open_website(setup)
         self.AO = accountCreationObjects(self.driver)
         # Log in and go to the welcome page
         self.AO.path_to_signinButton()
@@ -41,20 +35,24 @@ class Test_cart_002:
         self.AO.passwordSignin(self.EXISTING_PASSWORD)
         self.AO.signinButton()
         # navigate to the men url for item selection
+
+    def MenCatalog(self, setup):
+        self.log_test_start("******* Test for the welcome page *******")
         self.MC = MenPageObject(self.driver)
         self.MC.menCatalog()
 
-    def testAddMenHoodieToCart(self, setup):
-        self.MenCatalog(setup)
-        time.sleep(2)
+    def WomenCatalog(self, setup):
+        self.log_test_start("******* Test for the welcome page *******")
+        self.WE = WomenPageObject(self.driver)
+        self.WE.womenCatalog()
+
+    def choiceForSizeAndColor(self, setup, method):
         self.MC = MenPageObject(self.driver)
-        # Define the locators for the items and pick 4 items and add to the cart
-        ItemsOfHoodiesPage = self.MC.addHoodies_sweatshirtToCart2()           # take you to the catalog for the hoodies
+        ItemsOfHoodiesPage = method()             # take you to the catalog for the hoodies
         ListOfAddedItems = []
         time.sleep(2)
 
-        # defining the sizes
-        sizes = ['XS', 'S', 'M', 'L', 'XL']         # INDEX ERROR
+        sizes = ['XS', 'S', 'M', 'L', 'XL']
         numbers = [1, 2, 3]
         wait = WebDriverWait(self.driver, 10)
 
@@ -73,15 +71,33 @@ class Test_cart_002:
             self.MC.addToCart()
             time.sleep(3)
             self.driver.back()
-
-        # call on the items in the cart and verify the correct addition of the items tot eh cart
-        CartItems = self.MC.cart_items()
         cleanedList = [item.strip() for item in ListOfAddedItems]
-        print(CartItems,cleanedList)
+        return cleanedList
+
+    def testAddMenHoodieToCart(self, setup):
+        self.open_website(setup)
+        self.MC = MenPageObject(self.driver)
+        time.sleep(2)
+        numbers = self.driver.find_element(By.XPATH, "//span[@class='counter-number']")
+        number = numbers.get_attribute("text")
+
+        if number is not None:
+            self.MC.removeItemsFromCart()
+
+        self.MenCatalog(self.driver)
+        # call on the items in the cart and verify the correct addition of the items to the cart
+        addedItemsList = self.choiceForSizeAndColor(setup, self.MC.addHoodies_sweatshirtToCart2)
+        CartItems = self.MC.cart_items()
+        print(CartItems, addedItemsList)
         time.sleep(2)
 
-        assert set(cleanedList).__eq__ (set(CartItems)), self.logger.info("***** TEST FAILED: ITEMS NOT ADDED TO THE CART ****")
+        assert addedItemsList.__eq__(CartItems), self.logger.info(
+            "***** TEST FAILED: ITEMS NOT ADDED TO THE CART ****")
 
         self.logger.info("**** TEST SUCCESSFUL: ITEMS WERE ADDED TO THE CART *******")
+
+
+
+
 
 
