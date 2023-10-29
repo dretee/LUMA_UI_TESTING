@@ -38,7 +38,7 @@ class MenPageObject:
     edit_cart_xpath = "//a[@class='action viewcart']"
     checkOut_xpath = "//button[@id='top-cart-btn-checkout']"
     cart_items_list_xpath = "//table[@id='shopping-cart-table']//div[@class='product-item-details']//a"
-    deleteFromCart = "//a[@title='Remove item']"
+    deleteFromCart = "a[class='action action-delete']"
 
     color_xpaths = {
         1: color_list_xpath1,
@@ -62,13 +62,6 @@ class MenPageObject:
     def bottomCatalog(self):
         self.driver.find_element(By.XPATH, self.bottom_xpath).click()
 
-    def addHoodies_sweatshirtToCart(self):
-        # Click on the element identified by the XPATH for hoodies/sweatshirts
-        self.driver.find_element(By.XPATH, self.hoodies_sweatshirt_xpath).click()
-        wait = WebDriverWait(self.driver, 10)
-        listOfItems = wait.until(
-            EC.presence_of_all_elements_located((By.XPATH, self.list_of_item_in_hoodies_sweatshirt_xpath)))
-        return listOfItems
 
     def addHoodies_sweatshirtToCart2(self):
         # Click on the element identified by the XPATH for hoodies/sweatshirts
@@ -160,10 +153,17 @@ class MenPageObject:
         self.driver.find_element(By.XPATH, self.edit_cart_xpath).click()
         # Wait for elements to be present before interacting with them
         wait = WebDriverWait(self.driver, 10)
-        delete_buttons = wait.until(EC.presence_of_all_elements_located((By.XPATH, self.deleteFromCart)))
+        while True:
+            delete_buttons = self.driver.find_elements(By.CSS_SELECTOR, self.deleteFromCart)
+            print(len(delete_buttons))
 
-        for delete_button in delete_buttons:
-            delete_button.click()
+            # Check if there are any delete buttons left
+            if len(delete_buttons) == 0:
+                print("No delete buttons found.")
+                break
+
+            # Click the first delete button in the list
+            delete_buttons[0].click()
 
             # Handling a confirmation
             try:
@@ -171,3 +171,6 @@ class MenPageObject:
                 alert.accept()
             except TimeoutException:
                 print("No alert is present.")
+                break
+
+
