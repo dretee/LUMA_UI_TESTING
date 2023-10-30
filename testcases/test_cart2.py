@@ -78,20 +78,18 @@ class Test_cart_002:
         self.open_website(setup)
         self.MC = MenPageObject(self.driver)
         time.sleep(2)
-        numbers = self.driver.find_element(By.XPATH, "//span[@class='counter-number']")
-        number = numbers.get_attribute("text")
-
-        if number is not None:
-            self.MC.removeItemsFromCart()
-
-        self.MenCatalog(self.driver)
+        #self.MC.removeItemsFromCart()
         # call on the items in the cart and verify the correct addition of the items to the cart
+        self.MenCatalog(self.driver)
         addedItemsList = self.choiceForSizeAndColor(setup, self.MC.addHoodies_sweatshirtToCart2)
         CartItems = self.MC.cart_items()
-        print(CartItems, addedItemsList)
+
+        # Print items for manual inspection
+        print("Cart Items: ", CartItems)
+        print("Added Items: ", addedItemsList)
         time.sleep(2)
 
-        assert addedItemsList.__eq__(CartItems), self.logger.info(
+        assert addedItemsList == CartItems, self.logger.info(
             "***** TEST FAILED: ITEMS NOT ADDED TO THE CART ****")
 
         self.logger.info("**** TEST SUCCESSFUL: ITEMS WERE ADDED TO THE CART *******")

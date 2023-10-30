@@ -145,32 +145,32 @@ class MenPageObject:
             verifying_list_from_cart.append(item.get_attribute("text"))
 
         # Returns the list containing text attributes of cart items and the count of items in the cart
-        return verifying_list_from_cart, numberOfItems
+        return verifying_list_from_cart
 
     def removeItemsFromCart(self):
+
         self.driver.find_element(By.XPATH, self.cart_name).click()
-        time.sleep(2)
-        self.driver.find_element(By.XPATH, self.edit_cart_xpath).click()
-        # Wait for elements to be present before interacting with them
-        wait = WebDriverWait(self.driver, 10)
-        while True:
+        if not self.driver.find_element(By.CSS_SELECTOR, "strong[class='subtitle empty']").is_displayed():
+            print('no item in the cart')
+        else:
+            time.sleep(2)
+            self.driver.find_element(By.XPATH, self.edit_cart_xpath).click()
+            # Wait for elements to be present before interacting with them
+            wait = WebDriverWait(self.driver, 10)
             delete_buttons = self.driver.find_elements(By.CSS_SELECTOR, self.deleteFromCart)
             print(len(delete_buttons))
 
-            # Check if there are any delete buttons left
-            if len(delete_buttons) == 0:
-                print("No delete buttons found.")
-                break
+            for number in range(len(delete_buttons)):
+                # Click the first delete button
+                delete_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, self.deleteFromCart)))
+                delete_button.click()
 
-            # Click the first delete button in the list
-            delete_buttons[0].click()
+                # Handling a confirmation
+                try:
+                    alert = wait.until(EC.alert_is_present())
+                    alert.accept()
+                except TimeoutException:
+                    print("No alert is present.")
 
-            # Handling a confirmation
-            try:
-                alert = wait.until(EC.alert_is_present())
-                alert.accept()
-            except TimeoutException:
-                print("No alert is present.")
-                break
 
 

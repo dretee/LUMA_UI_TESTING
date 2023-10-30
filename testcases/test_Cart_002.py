@@ -107,56 +107,7 @@ class Test_cart_002:
             self.logger.error(f"TEST FAILED: {e}")
             raise e
 
-    def est_addMaximumQuantityForItem(self, setup):
 
-        # navigationToTheMenCatalog and add item
-        self.MenCatalog(setup)
-        self.MO = MenPageObject(self.driver)
-
-        # navigate to the women url for item selection and add items from the women sections
-
-        self.WomenCatalog(setup)
-        self.WC = WomenPageObject(self.driver)
-
-    # add items from all sections of the catalog
-
-    # Remove the items using the provided means
-
-    def est_addMinimumQuantityForItem(self, setup):
-
-        # navigationToTheMenCatalog and add items
-        self.MenCatalog(setup)
-        self.MO = MenPageObject(self.driver)
-
-        # Navigate to the women section to add items
-        self.WomenCatalog(setup)
-        self.WC = WomenPageObject(self.driver)
-
-        # Remove the items using the provided means
-
-    def est_addNegativeQuantityForItem(self, setup):
-
-        # navigationToTheMenCatalog
-        self.MenCatalog(setup)
-        self.MO = MenPageObject(self.driver)
-
-        # Navigate to the women section to add items
-        self.WomenCatalog(setup)
-        self.WC = WomenPageObject(self.driver)
-
-        # Remove the items using the provided means
-
-    def est_addAboveMaximumQuantityForItem(self, setup):
-
-        # navigationToTheMenCatalog
-        self.MenCatalog(setup)
-        self.MO = MenPageObject(self.driver)
-
-        # Navigate to the men / women section to add items
-        self.WomenCatalog(setup)
-        self.WC = WomenPageObject(self.driver)
-
-        # Remove the items using the provided means
 
     def est_links_on_page_women(self, setup):
         # navigationToTheWomenCatalog
