@@ -1,5 +1,4 @@
 import time
-
 from selenium.webdriver.common.by import By
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
@@ -26,7 +25,7 @@ class Test_Login:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def est_valid_login_004(self, setup):
+    def test_valid_login_004(self, setup):
         self.open_website(setup)
         self.LO = loginObject(self.driver)
         self.LO.click_signin_link()
@@ -41,6 +40,7 @@ class Test_Login:
         self.driver.quit()
         assert welcome_text in text_of_body, self.logger.info("*** TEST FAILED: LOGING PROCESS FAILED ***")
         self.logger.info("*** TEST SUCCESSFUL: LOGIN PROCESS SUCCESSFUL ***")
+        self.driver.quit()
 
     def test_invalid_login(self, setup):
         self.open_website(setup)
@@ -79,3 +79,6 @@ class Test_Login:
             "*** TEST FAILED: LOGIN WAS SUCCESSFUL WITH INVALID DETAILS ****")
 
         self.logger.info("**** TEST SUCCESSFUL: THE USER WAS NOT LOGGED IN WIT INVALID CREDENTIAL")
+        self.driver.quit()
+
+
