@@ -3,12 +3,13 @@ from selenium.webdriver.common.by import By
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
 from PageObjects.LoginPageObject import loginObject
+from Utilities.ReadProperties import ReadProperties
 
 
 class Test_Login:
-    URL = "https://magento.softwaretestingboard.com"
-    EXISTING_EMAIL = "ubongphilip2200@gmail.com"
-    EXISTING_PASSWORD = "Ubong123?"
+    URL = ReadProperties.getPageURL()
+    EXISTING_EMAIL = ReadProperties.getEmail()
+    EXISTING_PASSWORD = ReadProperties.getPassword()
     logger = recordLogger.log_generator_info()
     PATH = ".\\TestData\\LUMA e-commerce Test Plan and Matrix.xlsx"
 

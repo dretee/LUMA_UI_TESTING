@@ -2,11 +2,13 @@ import time
 from selenium.webdriver.common.by import By
 from Utilities.recordLogger import recordLogger
 from PageObjects.createAccountObjects import accountCreationObjects
+from Utilities.ReadProperties import ReadProperties
+
 
 class TestCreationAndSignin:
-    URL = "https://magento.softwaretestingboard.com"
-    EXISTING_EMAIL = "ubongphilip2200@gmail.com"
-    EXISTING_PASSWORD = "Ubong123?"
+    URL = ReadProperties.getPageURL()
+    EXISTING_EMAIL = ReadProperties.getEmail()
+    EXISTING_PASSWORD = ReadProperties.getPassword()
     logger = recordLogger.log_generator_info()
 
     # Method to log the start of a test

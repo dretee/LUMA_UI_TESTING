@@ -2,10 +2,11 @@ from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
 from PageObjects.LoginPageObject import loginObject
 from PageObjects.forgotPasswordObjectPage import forgot_password
+from Utilities.ReadProperties import ReadProperties
 
 
 class Test_Login:
-    URL = "https://magento.softwaretestingboard.com"
+    URL = ReadProperties.getPageURL()
     logger = recordLogger.log_generator_info()
     PATH = ".\\TestData\\LUMA e-commerce Test Plan and Matrix.xlsx"
 
