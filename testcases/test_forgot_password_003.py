@@ -1,9 +1,6 @@
-import time
-from selenium.webdriver.common.by import By
-
-from PageObjects.LoginPageObject import loginObject
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
+from PageObjects.LoginPageObject import loginObject
 from PageObjects.forgotPasswordObjectPage import forgot_password
 
 
@@ -25,7 +22,9 @@ class Test_Login:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def test_forgot_password_for_invalid_user(self, setup):
+    def test_forgot_password_for_invalid_user_008(self, setup):
+        self.log_test_start("**** test_forgot_password_for_invalid_user_008 ****")
+        self.logger.info("*** user email is not on the database *****")
         self.open_website(setup)
         self.LO = loginObject(self.driver)
         self.LO.click_signin_link()
@@ -35,7 +34,7 @@ class Test_Login:
 
         for r in range(11, self.rowcount):
             self.userEmail = ReadXyFile.readData(self.PATH, "test data", r, 2)
-
+        self.logger.info(f"***** data gotten form the excel sheet. Email is {self.userEmail} ******")
         self.FP.inputEmaiAddress(self.userEmail)
         self.FP.clickResetButton()
 
@@ -45,8 +44,10 @@ class Test_Login:
 
         self.logger.info("**** TEST PASSED: PASSWORD RESET AND LINK WAS SENT")
         self.driver.quit()
+        self.log_test_end("**** test_forgot_password_for_invalid_user_008 ****")
 
-    def test_forgot_password_for_valid_user(self, setup):
+    def test_forgot_password_for_valid_user_009(self, setup):
+        self.log_test_start("***** test_forgot_password_for_valid_user_009 *****")
         self.open_website(setup)
         self.LO = loginObject(self.driver)
         self.LO.click_signin_link()
@@ -56,7 +57,7 @@ class Test_Login:
 
         for r in range(12, self.rowcount+1):
             self.userEmail = ReadXyFile.readData(self.PATH, "test data", r, 2)
-
+        self.logger.info(f"***** data gotten form the excel sheet. Email is {self.userEmail} ******")
         self.FP.inputEmaiAddress(self.userEmail)
         self.FP.clickResetButton()
 
@@ -68,5 +69,6 @@ class Test_Login:
 
         self.logger.info("**** TEST PASSED: PASSWORD RESET AND LINK WAS SENT")
         self.driver.quit()
+        self.log_test_end("*** test_forgot_password_for_valid_user_009 ****")
 
 

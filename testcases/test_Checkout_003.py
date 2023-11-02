@@ -1,7 +1,8 @@
 import time
 from selenium.webdriver.common.by import By
-from PageObjects.createAccountObjects import accountCreationObjects
 from Utilities.recordLogger import recordLogger
+from PageObjects.createAccountObjects import accountCreationObjects
+
 
 
 class Test_checkout_003:

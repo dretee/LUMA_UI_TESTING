@@ -1,13 +1,12 @@
 import time
+import random
 from selenium.webdriver.common.by import By
-from PageObjects.WomenPageObject import WomenPageObject
-from PageObjects.createAccountObjects import accountCreationObjects
 from Utilities.recordLogger import recordLogger
 from PageObjects.menPageObject import MenPageObject
-from selenium.webdriver.support import expected_conditions as EC
+from PageObjects.WomenPageObject import WomenPageObject
 from selenium.webdriver.support.ui import WebDriverWait
-import random
-import requests
+from PageObjects.createAccountObjects import accountCreationObjects
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Test_cart_002:
