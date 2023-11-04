@@ -47,7 +47,7 @@ class Test_cart_002:
 
     def choiceForSizeAndColor(self, setup, method):
         self.MC = MenPageObject(self.driver)
-        ItemsOfHoodiesPage = method()             # take you to the catalog for the hoodies
+        ItemsOfHoodiesPage = method()             # takes you to the catalog for the hoodies
         ListOfAddedItems = []
         time.sleep(2)
 

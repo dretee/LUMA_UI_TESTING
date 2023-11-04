@@ -8,6 +8,7 @@ from Utilities.ReadProperties import ReadProperties
 
 class Test_Login:
     URL = ReadProperties.getPageURL()
+    loginPageUrl = ReadProperties.LoginURL()
     EXISTING_EMAIL = ReadProperties.getEmail()
     EXISTING_PASSWORD = ReadProperties.getPassword()
     logger = recordLogger.log_generator_info()
@@ -19,18 +20,28 @@ class Test_Login:
     def log_test_end(self, test_name):
         self.logger.info(f"****** ENDING TEST: {test_name} ******")
 
-    def open_website(self, setup):
+    def open_website(self, setup, URL):
         self.log_test_start("Open Website")
         self.driver = setup
-        self.driver.get(self.URL)
+        self.driver.get(URL)
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def test_valid_login_001(self, setup):
-        self.log_test_start("***** test_valid_login_001 ******")
-        self.open_website(setup)
+    def test_functionality_of_the_signin_link_000(self, setup):
+        self.log_test_start("**** test_functionality_of_the_signin_link_000 *****")
+        self.open_website(setup, self.URL)
         self.LO = loginObject(self.driver)
         self.LO.click_signin_link()
+        assert self.driver.title == "Customer Login", self.logger.info("*** TEST FAILED: THE PAGE PRESENTED ISNT THE "
+                                                                       "LOGIN PAGE ****")
+        self.logger.info("**** TEST PASSED: THE LOGIN PAGE WAS SHOWN ON CLICKING THE LINK")
+        self.log_test_end("**** test_functionality_of_the_signin_link_000 *****")
+        self.driver.quit()
+
+    def test_valid_login_001(self, setup):
+        self.log_test_start("***** test_valid_login_001 ******")
+        self.open_website(setup, self.loginPageUrl)
+        self.LO = loginObject(self.driver)
         self.logger.info("***** input the email and the password in to the necessary fields ******")
         self.LO.inputEmail(self.EXISTING_EMAIL)
         self.LO.inputPassword(self.EXISTING_PASSWORD)
@@ -50,9 +61,8 @@ class Test_Login:
 
     def test_invalid_login_002(self, setup):
         self.log_test_start("**** test_invalid_login_002 ")
-        self.open_website(setup)
+        self.open_website(setup, self.loginPageUrl)
         self.LO = loginObject(self.driver)
-        self.LO.click_signin_link()
         self.logger.info("**** Read the data from the excel sheet ******")
         self.rowCount = ReadXyFile.getRowCount(self.PATH, "test data")
         self.logger.info(f"Total rows to process: {self.rowCount}")
