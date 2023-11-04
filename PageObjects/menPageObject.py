@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
 class MenPageObject:
     add_to_cart_button_id = "product-addtocart-button"
     men_catalog_link_xpath = "//span[normalize-space()='Men']"
@@ -38,7 +37,7 @@ class MenPageObject:
     edit_cart_xpath = "//a[@class='action viewcart']"
     checkOut_xpath = "//button[@id='top-cart-btn-checkout']"
     cart_items_list_xpath = "//table[@id='shopping-cart-table']//div[@class='product-item-details']//a"
-    deleteFromCart = "a[class='action action-delete']"
+    deleteFromCart = "`a[class='action action-delete']`"
 
     color_xpaths = {
         1: color_list_xpath1,
@@ -62,18 +61,17 @@ class MenPageObject:
     def bottomCatalog(self):
         self.driver.find_element(By.XPATH, self.bottom_xpath).click()
 
-
     def addHoodies_sweatshirtToCart2(self):
         # Click on the element identified by the XPATH for hoodies/sweatshirts
         self.driver.find_element(By.XPATH, self.hoodies_sweatshirt_xpath).click()
 
-        catalogHoodies_seatshirtXpath = ["//div[@class='product details product-item-details']//a[@class='product-item-link']",
-                                         "//a[normalize-space()='Ajax Full-Zip Sweatshirt']",
-                                         "//a[normalize-space()='Grayson Crewneck Sweatshirt']",
-                                         "//a[normalize-space()='Oslo Trek Hoodie']"]
+        catalogHoodies_seatshirtXpath = [
+            "//div[@class='product details product-item-details']//a[@class='product-item-link']",
+            "//a[normalize-space()='Ajax Full-Zip Sweatshirt']",
+            "//a[normalize-space()='Grayson Crewneck Sweatshirt']",
+            "//a[normalize-space()='Oslo Trek Hoodie']"]
 
         return catalogHoodies_seatshirtXpath
-
 
     def addJacketsToCart(self):
         # Click on the element identified by the XPATH for Jackets
@@ -171,6 +169,3 @@ class MenPageObject:
                     alert.accept()
                 except TimeoutException:
                     print("No alert is present.")
-
-
-
