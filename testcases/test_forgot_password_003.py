@@ -6,8 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
-from PageObjects.LoginPageObject import loginObject
-from PageObjects.forgotPasswordObjectPage import forgot_password
+from PageObjects.LoginObjects.LoginPageObject import loginObject
+from PageObjects.ForgotPassword.forgotPasswordObjectPage import forgot_password
 from Utilities.ReadProperties import ReadProperties
 
 
@@ -23,10 +23,10 @@ class Test_Login:
     def log_test_end(self, test_name):
         self.logger.info(f"****** ENDING TEST: {test_name} ******")
 
-    def open_website(self, setup, URL):
+    def open_website(self, setup, url):
         self.log_test_start("Open Website")
         self.driver = setup
-        self.driver.get(URL)
+        self.driver.get(url)
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 

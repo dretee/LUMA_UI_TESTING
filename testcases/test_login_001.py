@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
-from PageObjects.LoginPageObject import loginObject
+from PageObjects.LoginObjects.LoginPageObject import loginObject
 from Utilities.ReadProperties import ReadProperties
 
 
@@ -20,14 +20,15 @@ class Test_Login:
     def log_test_end(self, test_name):
         self.logger.info(f"****** ENDING TEST: {test_name} ******")
 
-    def open_website(self, setup, URL):
+    def open_website(self, setup, url):
         self.log_test_start("Open Website")
         self.driver = setup
-        self.driver.get(URL)
+        print(url)
+        self.driver.get(url)
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def test_functionality_of_the_signin_link_000(self, setup):
+    def est_functionality_of_the_signin_link_000(self, setup):
         self.log_test_start("**** test_functionality_of_the_signin_link_000 *****")
         self.open_website(setup, self.URL)
         self.LO = loginObject(self.driver)
