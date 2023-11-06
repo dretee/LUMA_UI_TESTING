@@ -8,8 +8,16 @@ class ReadProperties:
 
     @staticmethod
     def getPageURL():
-        return configs.get("common data", "HomeURL")
+        url = configs.get("common data", "HomeURL")
+        return url
 
+    @staticmethod
+    def getAccountCreationURL():
+        return configs.get("common data", "createAccount")
+
+    @staticmethod
+    def getCartURL():
+        return configs.get("common data", "cartURL")
     @staticmethod
     def getEmail():
         return configs.get("common data", "EXISTING_EMAIL")
@@ -52,14 +60,14 @@ class ReadProperties:
 
     @staticmethod
     def getWomenPantsPageURL():
-        return configs.get("women page data", "URLForPantsPage")
+        return configs.get("Women page data", "URLForPantsPage")
 
     @staticmethod
     def getWomenShortsPageURL():
-        return configs.get("women page data", "URLForShortsPage")
+        return configs.get("Women page data", "URLForShortsPage")
 
     @staticmethod
     def getWomenTanksPageURL():
-        return configs.get("women page data", "URLForTanksPage")
+        return configs.get("Women page data", "URLForTanksPage")
 
 
