@@ -39,3 +39,5 @@ def colorPicker(driver, number, color_xpaths):
 
         colour_element.click()
         raise ValueError(f"Invalid color number: {number}. Please provide a valid color number.")
+
+

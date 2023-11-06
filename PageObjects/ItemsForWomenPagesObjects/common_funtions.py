@@ -9,16 +9,18 @@ def sizePicker(driver, size, size_list_xpath):
     sizes = size_list_xpath
 
     # Check the provided size and click the corresponding element
-    if size == "XS" or "36":
+    if size == "XS" or "28":
         wait.until(EC.element_to_be_clickable((By.XPATH, sizes[0]))).click()  # Click on the XS size element
-    elif size == "S" or "35":
+    elif size == "S" or "29":
         wait.until(EC.element_to_be_clickable((By.XPATH, sizes[1]))).click()  # Click on the S size element
-    elif size == "M" or "34":
+    elif size == "M" or "30":
         wait.until(EC.element_to_be_clickable((By.XPATH, sizes[2]))).click()  # Click on the M size element
-    elif size == "L" or "33":
+    elif size == "L" or "31":
         wait.until(EC.element_to_be_clickable((By.XPATH, sizes[3]))).click()  # Click on the L size element
     elif size == "XL" or "32":
         wait.until(EC.element_to_be_clickable((By.XPATH, sizes[4]))).click()  # Click on the XL size element
+    else:
+        wait.until(EC.element_to_be_clickable((By.XPATH, sizes[0]))).click()  # Click on the XS size element
 
 
 def colorPicker(driver, number, color_xpaths):
