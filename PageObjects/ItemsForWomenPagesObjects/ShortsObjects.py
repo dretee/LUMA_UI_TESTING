@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from PageObjects.ItemsForMenPagesObjects import common_funtions
+from PageObjects.ItemsForWomenPagesObjects import common_funtions
 
 
 class WomenShortsObjects:
@@ -29,10 +29,10 @@ class WomenShortsObjects:
     }
 
     catalogShortsXpath = [
-        "//a[normalize-space()='Pierce Gym Short']",
-        "//a[normalize-space()='Orestes Fitness Short']",
-        "//a[normalize-space()='Torque Power Short']",
-        "//a[normalize-space()='Apollo Running Short']"]
+        "//a[normalize-space()='Gwen Drawstring Bike Short']",
+        "//a[normalize-space()='Artemis Running Short']",
+        "//a[normalize-space()='Mimi All-Purpose Short']",
+        "//a[normalize-space()='Ina Compression Short']"]
 
     def __init__(self, driver):
         self.driver = driver
@@ -45,26 +45,11 @@ class WomenShortsObjects:
 
         sizes = ['28', '29', '30', '31', '32']
         numbers = [1, 2, 3]
-        wait = WebDriverWait(self.driver, 10)
 
-        list_of_prices = []
+        returns = common_funtions.choosing_action_of_items(self.driver, sizes, numbers, self.catalogShortsXpath,
+                                                           self.size_list_xpath, self.color_xpaths,
+                                                           self.add_to_cart_button_id, self.price_locator)
+        list_of_prices, list_of_items = returns
 
-        for xpath in self.catalogShortsXpath:
-            element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-            element.click()
+        return list_of_prices, list_of_items
 
-            # getting a random size for the item
-            size, number = random.choice(sizes), random.choice(numbers)
-
-            common_funtions.sizePicker(self.driver, size, self.size_list_xpath)
-
-            common_funtions.colorPicker(self.driver, number, self.color_xpaths)
-
-            price = self.driver.find_element(By.XPATH, self.price_locator).get_attribute("data-price-amount")
-            list_of_prices.append(price)
-
-            self.addToCart()
-            time.sleep(3)
-            self.driver.back()
-
-        return list_of_prices

@@ -1,3 +1,6 @@
+import random
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -41,3 +44,34 @@ def colorPicker(driver, number, color_xpaths):
 
         colour_element.click()
         raise ValueError(f"Invalid color number: {number}. Please provide a valid color number.")
+
+
+def addToCart(driver, ID):
+    WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, ID))).click()
+
+
+def choosing_action_of_items(driver, sizes, numbers, catalogXpath, size_list_xpath, color_xpaths, ID, price_locator):
+    list_of_prices = []
+    list_of_items = []
+    wait = WebDriverWait(driver, 10)
+    for xpath in catalogXpath:
+        element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+        item_name = element.text
+        element.click()
+
+        # getting a random size for the item
+        size, number = random.choice(sizes), random.choice(numbers)
+
+        sizePicker(driver, size, size_list_xpath)
+
+        colorPicker(driver, number, color_xpaths)
+
+        price = driver.find_element(By.XPATH, price_locator).get_attribute("data-price-amount")
+        list_of_prices.append(price)
+        list_of_items.append(item_name)
+
+        addToCart(driver, ID)
+        time.sleep(3)
+        driver.back()
+
+    return list_of_prices, list_of_items

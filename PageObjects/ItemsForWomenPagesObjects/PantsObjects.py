@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from PageObjects.ItemsForMenPagesObjects import common_funtions
+from PageObjects.ItemsForWomenPagesObjects import common_funtions
 
 
 class WomenPantsObjects:
@@ -28,7 +28,7 @@ class WomenPantsObjects:
         3: color_list_xpath3
     }
 
-    catalogPantsXpath = [
+    catalogWomenPantsXpath = [
         "//a[normalize-space()='Sylvia Capri']",
         "//a[normalize-space()='Carina Basic Capri']",
         "//a[normalize-space()='Aeon Capri']",
@@ -45,26 +45,9 @@ class WomenPantsObjects:
 
         sizes = ['28', '29']
         numbers = [1, 2, 3]
-        wait = WebDriverWait(self.driver, 10)
+        returns = common_funtions.choosing_action_of_items(self.driver, sizes, numbers, self.catalogWomenPantsXpath,
+                                                           self.size_list_xpath, self.color_xpaths,
+                                                           self.add_to_cart_button_id, self.price_locator)
+        list_of_prices, list_of_items = returns
 
-        list_of_prices = []
-
-        for xpath in self.catalogPantsXpath:
-            element = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-            element.click()
-
-            # getting a random size for the item
-            size, number = random.choice(sizes), random.choice(numbers)
-
-            common_funtions.sizePicker(self.driver, size, self.size_list_xpath)
-
-            common_funtions.colorPicker(self.driver, number, self.color_xpaths)
-
-            price = self.driver.find_element(By.XPATH, self.price_locator).get_attribute("data-price-amount")
-            list_of_prices.append(price)
-
-            self.addToCart()
-            time.sleep(3)
-            self.driver.back()
-
-        return list_of_prices
+        return list_of_prices, list_of_items
