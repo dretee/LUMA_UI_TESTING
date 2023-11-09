@@ -1,3 +1,4 @@
+# Import necessary modules and classes
 import time
 from selenium.webdriver.common.by import By
 from Utilities.recordLogger import recordLogger
@@ -6,11 +7,12 @@ from Utilities.ReadProperties import ReadProperties
 
 
 class TestCreationAndSignin:
-    URL = ReadProperties.getPageURL()
-    createAccountURL = ReadProperties.getAccountCreationURL()
-    EXISTING_EMAIL = ReadProperties.getEmail()
-    EXISTING_PASSWORD = ReadProperties.getPassword()
-    logger = recordLogger.log_generator_info()
+    # Initialize class variables with URLs and logger instance
+    URL = ReadProperties.getPageURL()  # Get main page URL from configuration
+    createAccountURL = ReadProperties.getAccountCreationURL()  # Get account creation page URL from configuration
+    EXISTING_EMAIL = ReadProperties.getEmail()  # Get existing user's email from configuration
+    EXISTING_PASSWORD = ReadProperties.getPassword()  # Get existing user's password from configuration
+    logger = recordLogger.log_generator_info()  # Initialize logger instance
 
     # Method to log the start of a test
     def log_test_start(self, test_name):
@@ -68,12 +70,12 @@ class TestCreationAndSignin:
             self.logger.info("*** TEST FAILED: Another account was created for the user ***")
         self.logger.info("***** TEST PASSED: No account was created for the user ******")
 
-    ## VERIFICATION METHODS
     ## TESTING METHODS
-    # TEST TO VERIFY THE FUNCTIONALITY OF THE CREATE ACCOUNT LINK
+    # Test to verify the functionality of the create account link
     def test_verify_create_account_link_001(self, setup):
         self.log_test_start("***** test_verify_create_account_link_001 ****")
         self.open_website(setup, self.URL)
+        self.AO = accountCreationObjects(self.driver)
         status = self.AO.createAccount()
         assert status, self.logger.info("*** TEST FAILED: PAGE DISPLAYED DOES NOT HAVE "
                                         "TITLE: Create New Customer Account")
@@ -156,5 +158,3 @@ class TestCreationAndSignin:
         self.logger.info("***** TEST SUCCESSFULLY DONE *****")
         self.driver.quit()
         self.log_test_end("**** test_welcome_page_links_006 *****")
-
-

@@ -24,10 +24,12 @@ class loginObject:
     def inputEmail(self, email):
         self.driver.find_element(By.ID, self.email_id).clear()
         self.driver.find_element(By.ID, self.email_id).send_keys(email)
+        return self.driver.find_element(By.ID, self.email_id).is_displayed()
 
     def inputPassword(self, password):
         self.driver.find_element(By.ID, self.password_id).clear()
         self.driver.find_element(By.ID, self.password_id).send_keys(password)
+        return self.driver.find_element(By.ID, self.password_id).is_displayed()
 
     def click_login_button(self):
         self.driver.find_element(By.ID, self.login_button_id).click()

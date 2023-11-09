@@ -1,25 +1,30 @@
+# Import necessary modules and classes
 import time
-from selenium.webdriver.common.by import By
 from Utilities import ReadXyFile
+from selenium.webdriver.common.by import By
 from Utilities.recordLogger import recordLogger
-from PageObjects.LoginObjects.LoginPageObject import loginObject
 from Utilities.ReadProperties import ReadProperties
+from PageObjects.LoginObjects.LoginPageObject import loginObject
 
 
 class Test_Login:
-    URL = ReadProperties.getPageURL()
-    loginPageUrl = ReadProperties.LoginURL()
-    EXISTING_EMAIL = ReadProperties.getEmail()
-    EXISTING_PASSWORD = ReadProperties.getPassword()
-    logger = recordLogger.log_generator_info()
-    PATH = ".\\TestData\\LUMA e-commerce Test Plan and Matrix.xlsx"
+    # Initialize class variables with URLs, logger instance, and Excel file path
+    URL = ReadProperties.getPageURL()  # Get main page URL from configuration
+    loginPageUrl = ReadProperties.LoginURL()  # Get login page URL from configuration
+    EXISTING_EMAIL = ReadProperties.getEmail()  # Get existing email from configuration
+    EXISTING_PASSWORD = ReadProperties.getPassword()  # Get existing password from configuration
+    logger = recordLogger.log_generator_info()  # Initialize logger instance
+    PATH = ".\\TestData\\LUMA e-commerce Test Plan and Matrix.xlsx"  # Excel file path
 
+    # Method to log the start of a test
     def log_test_start(self, test_name):
         self.logger.info(f"****** STARTING TEST: {test_name} ******")
 
+    # Method to log the end of a test
     def log_test_end(self, test_name):
         self.logger.info(f"****** ENDING TEST: {test_name} ******")
 
+    # Method to open the website
     def open_website(self, setup, url):
         self.log_test_start("Open Website")
         self.driver = setup
@@ -28,38 +33,44 @@ class Test_Login:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
+    # Test functionality of the signin link
     def test_functionality_of_the_signin_link_010(self, setup):
         self.log_test_start("**** test_functionality_of_the_signin_link_010 *****")
         self.open_website(setup, self.URL)
         self.LO = loginObject(self.driver)
+
+        # Click on signin link
         self.LO.click_signin_link()
-        assert self.driver.title == "Customer Login", self.logger.info("*** TEST FAILED: THE PAGE PRESENTED ISNT THE "
+        assert self.driver.title == "Customer Login", self.logger.info("*** TEST FAILED: THE PAGE PRESENTED ISN'T THE "
                                                                        "LOGIN PAGE ****")
         self.logger.info("**** TEST PASSED: THE LOGIN PAGE WAS SHOWN ON CLICKING THE LINK")
         self.log_test_end("**** test_functionality_of_the_signin_link_010 *****")
         self.driver.quit()
 
+    # Test valid login
     def test_valid_login_011(self, setup):
         self.log_test_start("***** test_valid_login_011 ******")
         self.open_website(setup, self.loginPageUrl)
         self.LO = loginObject(self.driver)
-        self.logger.info("***** input the email and the password in to the necessary fields ******")
+        self.logger.info("***** input the email and the password into the necessary fields ******")
         self.LO.inputEmail(self.EXISTING_EMAIL)
         self.LO.inputPassword(self.EXISTING_PASSWORD)
         self.logger.info("*** Click on the login button *****")
         self.LO.click_login_button()
         time.sleep(4)
-        self.logger.info("*** Collect the entire text of the page body and check for the presence of welcome message "
+        self.logger.info("*** Collect the entire text of the page body and"
+                         " check for the presence of the welcome message "
                          "*****")
         text_of_body = self.driver.find_element(By.TAG_NAME, "body").text
         welcome_text = self.LO.login_alert()
         self.LO.click_logout()
         self.driver.quit()
-        assert welcome_text in text_of_body, self.logger.info("*** TEST FAILED: LOGING PROCESS FAILED ***")
+        assert welcome_text in text_of_body, self.logger.info("*** TEST FAILED: LOGIN PROCESS FAILED ***")
         self.logger.info("*** TEST SUCCESSFUL: LOGIN PROCESS SUCCESSFUL ***")
         self.log_test_end("******* test_valid_login_011*******")
         self.driver.quit()
 
+    # Test invalid login
     def test_invalid_login_012(self, setup):
         self.log_test_start("**** test_invalid_login_012 ")
         self.open_website(setup, self.loginPageUrl)
@@ -99,8 +110,6 @@ class Test_Login:
         assert all(items in actual_result for items in expected_result), self.logger.info(
             "*** TEST FAILED: LOGIN WAS SUCCESSFUL WITH INVALID DETAILS ****")
 
-        self.logger.info("**** TEST SUCCESSFUL: THE USER WAS NOT LOGGED IN WIT INVALID CREDENTIAL")
+        self.logger.info("**** TEST SUCCESSFUL: THE USER WAS NOT LOGGED IN WITH INVALID CREDENTIALS")
         self.log_test_end("test_invalid_login_012")
         self.driver.quit()
-
-
