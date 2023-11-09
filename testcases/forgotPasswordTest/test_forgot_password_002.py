@@ -1,14 +1,12 @@
-
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from Utilities import ReadXyFile
 from Utilities.recordLogger import recordLogger
+from Utilities.ReadProperties import ReadProperties
 from PageObjects.LoginObjects.LoginPageObject import loginObject
 from PageObjects.ForgotPassword.forgotPasswordObjectPage import forgot_password
-from Utilities.ReadProperties import ReadProperties
 
 
 class Test_Login:
@@ -30,8 +28,8 @@ class Test_Login:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def test_functionality_of_the_forgot_Password_link_000(self, setup):
-        self.log_test_start("***** test_functionality_of_the_forgot_Password_link_000 *****")
+    def test_functionality_of_the_forgot_Password_link_007(self, setup):
+        self.log_test_start("***** test_functionality_of_the_forgot_Password_link_007 *****")
         self.open_website(setup, self.URL)
         self.LO = loginObject(self.driver)
 
@@ -47,7 +45,7 @@ class Test_Login:
         assert email_field.is_displayed(), self.logger.info("****** Email address field not visible on the page ******")
 
         self.logger.info("**** Forgot Password Link functionality tested successfully *****")
-        self.log_test_end("**** test_functionality_of_the_signin_link_000 *****")
+        self.log_test_end("**** test_functionality_of_the_signin_link_007 *****")
         self.driver.quit()
 
     def test_forgot_password_for_invalid_user_008(self, setup):

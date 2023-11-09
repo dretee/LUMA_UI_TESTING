@@ -1,6 +1,5 @@
 import time
 from selenium.webdriver.common.by import By
-from selenium.common import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -21,18 +20,29 @@ class cartObject:
     def __init__(self, driver):
         self.driver = driver
 
-    def open_cart(self):
-        self.driver.find_element(By.XPATH, self.cart_name).click()
-        time.sleep(2)
+    def openCart(self, Url):
+        # Clicks on the cart icon to open the cart page
+        cart_icon = self.driver.find_element(By.XPATH, self.cart_name)
+        cart_icon.click()
+
         # Clicks on the 'Edit Cart' button
-        self.driver.find_element(By.XPATH, self.edit_cart_xpath).click()
+        edit_cart_button = self.driver.find_element(By.XPATH, self.edit_cart_xpath)
+        edit_cart_button.click()
+
+    def get_price_of_items(self, Url):
+        self.driver.get(Url)
+        # Waits for the subtotal element to be present in the DOM
         wait = WebDriverWait(self.driver, 10, 2)
-        subtotal = wait.until(EC.presence_of_element_located((By.XPATH, self.sum_total_xpath)))
+        subtotal_element = wait.until(EC.presence_of_element_located((By.XPATH, self.sum_total_xpath)))
 
-        return subtotal.text()
+        # Retrieves and prints the subtotal value
+        subtotal_value = subtotal_element.text
+        print("Subtotal Value:", subtotal_value)
 
-    def cart_items(self):
-        self.open_cart()
+        return subtotal_value
+
+    def cart_items(self, Url):
+        self.driver.get(Url)
         # Finds all items in the cart based on the specified XPATH
         items = self.driver.find_elements(By.XPATH, self.cart_items_list_xpath)
         # Calculates the number of items in the cart

@@ -1,12 +1,12 @@
 import time
-
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class checkOutObjects:
+class CheckOutObject:
     # define all the elements and their locators
     # NOTE: ids are dynamic
     cart_selector = "action showcart active"
@@ -28,7 +28,7 @@ class checkOutObjects:
     def __int__(self, driver):
         self.driver = driver
 
-    def openingCart(self):
+    def proceedToCheckOut(self):
         wait = WebDriverWait(self.driver, 10, 2)
         cart_button = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, self.cart_selector)))
         cart_button.click()
@@ -64,5 +64,3 @@ class checkOutObjects:
         country = Select(self.driver.find_element(By.XPATH, self.city_xpath))
         country.select_by_visible_text(option)
         time.sleep(2)
-
-

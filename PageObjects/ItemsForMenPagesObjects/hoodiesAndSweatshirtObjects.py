@@ -48,6 +48,6 @@ class hoodiesobjects:
                                                            self.catalogHoodies_sweatshirtXpath,
                                                            self.size_list_xpath, self.color_xpaths,
                                                            self.add_to_cart_button_id, self.price_locator)
-        list_of_prices, list_of_items = returns
 
-        return list_of_prices, list_of_items
+        return returns
+

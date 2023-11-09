@@ -28,19 +28,19 @@ class Test_Login:
         self.driver.maximize_window()
         self.log_test_end("Open Website")
 
-    def est_functionality_of_the_signin_link_000(self, setup):
-        self.log_test_start("**** test_functionality_of_the_signin_link_000 *****")
+    def test_functionality_of_the_signin_link_010(self, setup):
+        self.log_test_start("**** test_functionality_of_the_signin_link_010 *****")
         self.open_website(setup, self.URL)
         self.LO = loginObject(self.driver)
         self.LO.click_signin_link()
         assert self.driver.title == "Customer Login", self.logger.info("*** TEST FAILED: THE PAGE PRESENTED ISNT THE "
                                                                        "LOGIN PAGE ****")
         self.logger.info("**** TEST PASSED: THE LOGIN PAGE WAS SHOWN ON CLICKING THE LINK")
-        self.log_test_end("**** test_functionality_of_the_signin_link_000 *****")
+        self.log_test_end("**** test_functionality_of_the_signin_link_010 *****")
         self.driver.quit()
 
-    def test_valid_login_001(self, setup):
-        self.log_test_start("***** test_valid_login_001 ******")
+    def test_valid_login_011(self, setup):
+        self.log_test_start("***** test_valid_login_011 ******")
         self.open_website(setup, self.loginPageUrl)
         self.LO = loginObject(self.driver)
         self.logger.info("***** input the email and the password in to the necessary fields ******")
@@ -57,11 +57,11 @@ class Test_Login:
         self.driver.quit()
         assert welcome_text in text_of_body, self.logger.info("*** TEST FAILED: LOGING PROCESS FAILED ***")
         self.logger.info("*** TEST SUCCESSFUL: LOGIN PROCESS SUCCESSFUL ***")
-        self.log_test_end("******* test_valid_login_001*******")
+        self.log_test_end("******* test_valid_login_011*******")
         self.driver.quit()
 
-    def test_invalid_login_002(self, setup):
-        self.log_test_start("**** test_invalid_login_002 ")
+    def test_invalid_login_012(self, setup):
+        self.log_test_start("**** test_invalid_login_012 ")
         self.open_website(setup, self.loginPageUrl)
         self.LO = loginObject(self.driver)
         self.logger.info("**** Read the data from the excel sheet ******")
@@ -100,7 +100,7 @@ class Test_Login:
             "*** TEST FAILED: LOGIN WAS SUCCESSFUL WITH INVALID DETAILS ****")
 
         self.logger.info("**** TEST SUCCESSFUL: THE USER WAS NOT LOGGED IN WIT INVALID CREDENTIAL")
-        self.log_test_end("test_invalid_login_002")
+        self.log_test_end("test_invalid_login_012")
         self.driver.quit()
 
 

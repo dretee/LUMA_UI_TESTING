@@ -71,17 +71,19 @@ class TestCreationAndSignin:
     ## VERIFICATION METHODS
     ## TESTING METHODS
     # TEST TO VERIFY THE FUNCTIONALITY OF THE CREATE ACCOUNT LINK
-    def test_verify_create_account_link(self, setup):
-        self.log_test_start("***** test_verify_create_account_link ****")
+    def test_verify_create_account_link_001(self, setup):
+        self.log_test_start("***** test_verify_create_account_link_001 ****")
         self.open_website(setup, self.URL)
         status = self.AO.createAccount()
         assert status, self.logger.info("*** TEST FAILED: PAGE DISPLAYED DOES NOT HAVE "
                                         "TITLE: Create New Customer Account")
         self.logger.info("**** TEST PASSED: PAGE DISPLAYED HAS THE CORRECT TITLE ***** ")
+        self.log_test_end("***** test_verify_create_account_link_001 ****")
+        self.driver.quit()
 
     # Test for creating an account with valid details
-    def test_valid_details_account_creation_003(self, setup):
-        self.log_test_start("*******test_valid_details_account_creation_01 *******")
+    def test_valid_details_account_creation_002(self, setup):
+        self.log_test_start("*******test_valid_details_account_creation_002 *******")
         self.open_website(setup, self.createAccountURL)
         self.AO = accountCreationObjects(self.driver)
         self.AO.inputNames("Deo", "John")
@@ -92,12 +94,12 @@ class TestCreationAndSignin:
         self.verify_account_creation("Deo John", email)
         time.sleep(3)
         self.AO.log_dropdown("logout")
+        self.log_test_end("***** test_valid_details_account_creation_002 ****")
         self.driver.quit()
-        self.log_test_end("***** test_valid_details_account_creation_01 ****")
 
     # Test for creating multiple accounts with an existing user's email
-    def test_multiple_accounts_for_existing_user_004(self, setup):
-        self.log_test_start("test_multiple_accounts_for_existing_user_02")
+    def test_multiple_accounts_for_existing_user_003(self, setup):
+        self.log_test_start("**** test_multiple_accounts_for_existing_user_003 ****")
         self.logger.info("CREATION OF AN ACCOUNT WITH AN EMAIL THAT HAS BEEN USED ALREADY IN THE DATABASE ***")
         self.open_website(setup, self.createAccountURL)
         self.AO = accountCreationObjects(self.driver)
@@ -106,31 +108,31 @@ class TestCreationAndSignin:
         self.AO.inputPasswords(self.EXISTING_PASSWORD)
         self.verify_existing_user_creation()
         self.driver.quit()
-        self.log_test_end("test_multiple_accounts_for_existing_user_02")
+        self.log_test_end("*** test_multiple_accounts_for_existing_user_003 ****")
 
     # Test for creating an account with invalid names (integer)
-    def test_invalid_names_creation_005(self, setup):
-        self.log_test_start("***** test_invalid_names_creation_005 *****")
+    def test_invalid_names_creation_004(self, setup):
+        self.log_test_start("***** test_invalid_names_creation_004 *****")
         self.logger.info("**** CREATION OF ACCOUNT WITH THE USE OF DIGITS FOR THE FIRSTNAME AND LASTNAME ***")
         self.open_website(setup, self.createAccountURL)
         self.AO = accountCreationObjects(self.driver)
         self.verify_invalid_names("12300", "5672222", self.AO.email_generator())
         self.driver.quit()
-        self.log_test_end("***** test_invalid_names_creation_005 *****")
+        self.log_test_end("***** test_invalid_names_creation_004 *****")
 
     # Test for creating an account with invalid names (special characters)
-    def test_invalid_names_creation_with_special_charters_006(self, setup):
-        self.log_test_start("***** test_invalid_names_creation_with_special_charters_006  ***** ")
+    def test_invalid_names_creation_with_special_charters_005(self, setup):
+        self.log_test_start("***** test_invalid_names_creation_with_special_charters_005  *****")
         self.logger.info("Test for the creation of an account with invalid names (special characters)")
         self.open_website(setup, self.createAccountURL)
         self.AO = accountCreationObjects(self.driver)
         self.verify_invalid_names("TR1?EY", "UG&OTE", self.AO.email_generator())
         self.driver.quit()
-        self.log_test_end("***** test_invalid_names_creation_with_special_charters_006 *****")
+        self.log_test_end("***** test_invalid_names_creation_with_special_charters_005 *****")
 
     # Test for verifying links on the welcome page
-    def test_welcome_page_links_007(self, setup):
-        self.log_test_start("***** test_welcome_page_links_007 *****")
+    def test_welcome_page_links_006(self, setup):
+        self.log_test_start("***** test_welcome_page_links_006 *****")
         self.logger.info("******* Test for the welcome page *******")
         self.open_website(setup, self.URL)
         self.AO = accountCreationObjects(self.driver)
@@ -153,6 +155,6 @@ class TestCreationAndSignin:
         assert title_of_pages == list_of_all_page_title, self.logger.info("**** TEST FAILED *****")
         self.logger.info("***** TEST SUCCESSFULLY DONE *****")
         self.driver.quit()
-        self.log_test_end("**** test_welcome_page_links_007 *****")
+        self.log_test_end("**** test_welcome_page_links_006 *****")
 
 
