@@ -5,9 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class CheckOutObject:
-    # define all the elements and their locators
-    # NOTE: ids are dynamic
+class checkOutProcessObjects:
     cart_selector = "action showcart active"
     proceed_to_checkout_id = "top-cart-btn-checkout"
     first_name_xpath = "//input[@class='input-text' and @name='firstname']"
@@ -23,8 +21,9 @@ class CheckOutObject:
     place_order_selector = "[title='Place Order']"
     country_xpath = "//select[@id = 'DOBNEWI']"
     state_xpath = "//select[@id = 'NJQ1KVP']"
+    ship_to_selector = "[class =shipping-information-content]"
 
-    def __int__(self, driver):
+    def __init__(self, driver):
         self.driver = driver
 
     def proceedToCheckOut(self):
@@ -56,10 +55,28 @@ class CheckOutObject:
 
     def chooseState(self, option):
         state = Select(self.driver.find_element(By.XPATH, self.city_xpath))
+        time.sleep(2)
         state.select_by_visible_text(option)
         time.sleep(2)
 
     def chooseCountry(self, option):
         country = Select(self.driver.find_element(By.XPATH, self.city_xpath))
-        country.select_by_visible_text(option)
         time.sleep(2)
+        country.select_by_visible_text(option)
+
+    def inputPhoneNumber(self, number):
+        self.driver.find_element(By.XPATH, self.phone_number_xpath).clear()
+        self.driver.find_element(By.XPATH, self.phone_number_xpath).send_keys(number)
+
+    def clickOnNextButton(self):
+        self.driver.find_element(By.CSS_SELECTOR, self.next_button_selector).click()
+        wait = WebDriverWait(self.driver, 10, 2)
+        shipping_infor = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.ship_to_selector)))
+        return shipping_infor.text
+
+    def clickPlaceOrder(self):
+        wait = WebDriverWait(self.driver, 10, 2)
+        place_Order = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.place_order_selector)))
+        place_Order.click()
+
+
