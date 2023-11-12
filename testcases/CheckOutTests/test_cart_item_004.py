@@ -1,10 +1,8 @@
 # Import necessary modules and classes
-import time
 from Utilities.recordLogger import recordLogger
 from Utilities.ReadProperties import ReadProperties
 from PageObjects.LoginObjects.LoginPageObject import loginObject
 from PageObjects.ItemsForMenPagesObjects.PantsObjects import PantsObjects
-from PageObjects.ItemsForWomenPagesObjects.JacketsObjects import WomenJacketsObjects
 from PageObjects.ItemsForWomenPagesObjects.PantsObjects import WomenPantsObjects
 from PageObjects.CheckOutPagesObjects.CartObjectPage import cartObject
 

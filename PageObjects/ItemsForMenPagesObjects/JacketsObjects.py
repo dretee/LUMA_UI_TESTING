@@ -39,7 +39,7 @@ class Jacketsobjects:
     def addToCart(self):
         WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, self.add_to_cart_button_id))).click()
 
-    def choiceForSizeAndColor(self, setup, method):
+    def choiceForSizeAndColor(self):
         time.sleep(2)
 
         sizes = ['XS', 'S', 'M', 'L', 'XL']

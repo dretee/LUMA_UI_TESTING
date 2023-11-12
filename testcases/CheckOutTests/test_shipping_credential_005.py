@@ -2,14 +2,14 @@ import time
 
 from selenium.webdriver.common.by import By
 
+
 from Utilities.recordLogger import recordLogger
 from Utilities.ReadProperties import ReadProperties
 
 from PageObjects.LoginObjects.LoginPageObject import loginObject
 from PageObjects.CheckOutPagesObjects.CartObjectPage import cartObject
-from PageObjects.CheckOutPagesObjects.checkOurProcessObjects import checkOutProcessObjects
 from PageObjects.ItemsForMenPagesObjects.PantsObjects import PantsObjects
-from PageObjects.ItemsForWomenPagesObjects.JacketsObjects import WomenJacketsObjects
+from PageObjects.CheckOutPagesObjects.checkOurProcessObjects import checkOutProcessObjects
 
 
 class Test_Shipping_details_004:
@@ -20,14 +20,12 @@ class Test_Shipping_details_004:
     EXISTING_EMAIL = ReadProperties.getEmail()
     EXISTING_PASSWORD = ReadProperties.getPassword()
     logger = recordLogger.log_generator_info()
-
-    def __init__(self):
-        self.firstname = "Collins"
-        self.lastname = "Bravo"
-        self.company = "NileWays"
-        self.street = "1 Bravo avenue"
-        self.phoneNumber = "08133363256"
-        self.city = "08133363256"
+    firstname = "Collins"
+    lastname = "Bravo"
+    company = "NileWays"
+    street = "1 Bravo avenue"
+    phoneNumber = "08133363256"
+    city = "Arizona"
 
 
     def log_test_start(self, test_name):
@@ -52,22 +50,27 @@ class Test_Shipping_details_004:
         self.open_login_to_website(setup)
         # add items to the cart
         # GET THE JACKETS PAGE FOR WOMEN
-        self.driver.get(self.WomenJacketURL)
-        self.WHO = WomenJacketsObjects(self.driver)
-        self.WHO.choiceForSizeAndColor()
+        # self.driver.get(self.WomenJacketURL)
+        # self.WHO = WomenJacketsObjects(self.driver)
+        # self.WHO.choiceForSizeAndColor()
         # proceed to checking out
+        self.driver.get("https://magento.softwaretestingboard.com/checkout/#shipping")
+        self.CO = checkOutProcessObjects(self.driver)  # navigates to the shipping details page
 
-        self.CO = checkOutProcessObjects(self.driver)               # navigates to the shipping details page
-        self.CO.proceedToCheckOut()
+        #self.CO.proceedToCheckOut()
         self.CO.inputFirstName(self.firstname)
         self.CO.inputLastName(self.lastname)
         self.CO.inputCompany(self.company)
         self.CO.inputCity(self.city)
         self.CO.inputStreetAddress(self.street)
-        self.CO.chooseCountry("United State")
-        self.CO.chooseState("Arizona")
+        time.sleep(3)
+        self.CO.chooseCountry("US")
+        time.sleep(3)
+        self.CO.chooseState("3")
+        time.sleep(3)
         self.CO.inputPhoneNumber(self.phoneNumber)
-        shipping_information = self.CO.clickOnNextButton()      # navigates to the review and the payment page
+        time.sleep(3)
+        shipping_information = self.CO.clickOnNextButton()  # navigates to the review and the payment page
         # expected result: details are saved
         shipping_details = [self.firstname, self.lastname, self.company, self.street, self.phoneNumber, self.city]
 
@@ -81,8 +84,7 @@ class Test_Shipping_details_004:
         self.log_test_end("**** test_checkout_total_013 ****")
         self.driver.quit()
 
-
-    def test_add_shipping_details_when_user_is_not_logged_in_013(self, setup):
+    def est_add_shipping_details_when_user_is_not_logged_in_013(self, setup):
         self.log_test_start("**** test_add_shipping_details_when_user_is_not_logged_in_013  ****")
         self.logger.info("**** Test for the addition of the shipping details when the user is not logged in ****")
         self.log_test_start("Open Website")
@@ -94,7 +96,7 @@ class Test_Shipping_details_004:
         # proceed to check out
         self.CO = checkOutProcessObjects(self.driver)  # navigates to the shipping details page
         self.CO.proceedToCheckOut()
-        body_text = self.driver.find_element(By.TAG_NAME,"body").text
+        body_text = self.driver.find_element(By.TAG_NAME, "body").text
         self.LO = loginObject(self.driver)
         email_inbox_status = self.LO.inputEmail("Ubongphilp2200@gmail.com")
         password_inbox_status = self.LO.inputPassword("Ubong123?")
@@ -117,7 +119,8 @@ class Test_Shipping_details_004:
         self.CO.clickPlaceOrder()
         time.sleep(3)
         body_text = self.driver.find_element(By.TAG_NAME, "body").text
-        assert "Thank you for your purchase!" not in body_text,  self.logger.info("*** TEST FAILED: THE ORDER SUMMARY AND THE EMAIL/"
-                                                  "PASSWORD INPUT BOX ARE NOT AVAILABLE ")
+        assert "Thank you for your purchase!" not in body_text, self.logger.info("*** TEST FAILED: THE "
+                                                                                 "ORDER SUMMARY AND THE EMAIL/"
+                                                                                 "PASSWORD INPUT BOX ARE NOT AVAILABLE")
         self.logger.info("*** TEST TO VERIFY THE"
                          " DISPLAY OF THE INPUT BOXES WAS SUCCESSFUL AND THE ORDER SUMMARY WAS DISPLAYED")

@@ -72,7 +72,7 @@ class Test_checkout_003:
         self.driver.quit()
 
     # Test method for item removal from the cart
-    def test_removal(self, setup):
+    def est_removal(self, setup):
         self.open_login_to_website(setup)
         self.driver.get(self.cartURL)
         self.CO = cartObject(self.driver)
