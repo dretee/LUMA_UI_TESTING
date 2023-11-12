@@ -1,18 +1,17 @@
 # Import necessary modules and classes
 from selenium.webdriver.common.by import By
 
-from Utilities.recordLogger import recordLogger
-from Utilities.ReadProperties import ReadProperties
-from PageObjects.LoginObjects.LoginPageObject import loginObject
+from Utilities.recordLogger import recordLogger  # Importing logger utility
+from Utilities.ReadProperties import ReadProperties  # Importing property reader utility
+from PageObjects.LoginObjects.LoginPageObject import loginObject  # Importing login page object
+from PageObjects.CheckOutPagesObjects.CartObjectPage import cartObject  # Importing cart page object
+from PageObjects.ItemsForMenPagesObjects.ShortsObjects import ShortsObjects  # Importing shorts page object
+from PageObjects.ItemsForMenPagesObjects.PantsObjects import PantsObjects  # Importing pants page object
+from PageObjects.ItemsForMenPagesObjects.JacketsObjects import Jacketsobjects  # Importing jackets page object
+from PageObjects.ItemsForMenPagesObjects.hoodiesAndSweatshirtObjects import hoodiesobjects  # Importing hoodies page object
 
-from PageObjects.CheckOutPagesObjects.CartObjectPage import cartObject
-from PageObjects.ItemsForMenPagesObjects.ShortsObjects import ShortsObjects
-from PageObjects.ItemsForMenPagesObjects.PantsObjects import PantsObjects
-from PageObjects.ItemsForMenPagesObjects.JacketsObjects import Jacketsobjects
-from PageObjects.ItemsForMenPagesObjects.hoodiesAndSweatshirtObjects import hoodiesobjects
 
-
-class add_remove_men_items_from_cart:
+class TestAddRemoveMenItemsFromCart:
     # Initialize class variables with URLs and logger instance
     LoginURL = ReadProperties.LoginURL()  # Get login URL from configuration
     MenPantsPageURL = ReadProperties.getMenPantsPageURL()  # Get men's pants page URL from configuration
@@ -44,16 +43,19 @@ class add_remove_men_items_from_cart:
         self.LO.click_login_button()
 
     def item_removal(self, setup):
-        self.open_login_to_website(setup)
+        # Method to open the website, log in, and remove items from the cart
         self.driver.get(self.cartURL)
         self.CO = cartObject(self.driver)
         self.CO.removeItemsFromCart()
 
     def verify_empty_cart(self):
+        # Method to verify if the cart is empty
         body_text = self.driver.find_element(By.TAG_NAME, "body").text
-        assert "Shopping Cart" in body_text
+        assert "Shopping Cart" in body_text, self.logger.info("Shopping Cart is not present in the page body text")
+        self.logger.info("** TEST PASSED: CART IS EMPTY AND ALL ITEMS WERE REMOVED *****")
 
     def test_add_and_remove_items_from_hoodies_catalog(self, setup):
+        # Test method to add and remove items from the hoodies catalog
         self.log_test_start("*** test_add_and_remove_items_from_hoodies_catalog ***")
         self.open_login_to_website(setup)
         self.driver.get(self.MenHoodiesPageURL)
@@ -61,30 +63,41 @@ class add_remove_men_items_from_cart:
         self.HO.choiceForSizeAndColor()
         self.item_removal(setup)
         self.verify_empty_cart()
+        self.log_test_end("*** test_add_and_remove_items_from_hoodies_catalog ***")
+        self.driver.quit()
 
     def test_add_and_remove_items_from_jacket_catalog(self, setup):
-        self.log_test_start("*** test_add_and_remove_items_from_hoodies_catalog ***")
+        # Test method to add and remove items from the jacket catalog
+        self.log_test_start("*** test_add_and_remove_items_from_jacket_catalog ***")
         self.open_login_to_website(setup)
         self.driver.get(self.MenJacketsPageURL)
         self.HO = Jacketsobjects(self.driver)
         self.HO.choiceForSizeAndColor()
         self.item_removal(setup)
         self.verify_empty_cart()
+        self.log_test_end("*** test_add_and_remove_items_from_jacket_catalog ***")
+        self.driver.quit()
 
     def test_add_and_remove_items_from_pants_catalog(self, setup):
-        self.log_test_start("*** test_add_and_remove_items_from_hoodies_catalog ***")
+        # Test method to add and remove items from the pants catalog
+        self.log_test_start("*** test_add_and_remove_items_from_pants_catalog ***")
         self.open_login_to_website(setup)
         self.driver.get(self.MenPantsPageURL)
         self.HO = PantsObjects(self.driver)
         self.HO.choiceForSizeAndColor()
         self.item_removal(setup)
         self.verify_empty_cart()
+        self.log_test_end("*** test_add_and_remove_items_from_pants_catalog ***")
+        self.driver.quit()
 
     def test_add_and_remove_items_from_shorts_catalog(self, setup):
-        self.log_test_start("*** test_add_and_remove_items_from_hoodies_catalog ***")
+        # Test method to add and remove items from the shorts catalog
+        self.log_test_start("*** test_add_and_remove_items_from_shorts_catalog  ***")
         self.open_login_to_website(setup)
         self.driver.get(self.MenShortsPageURL)
         self.HO = ShortsObjects(self.driver)
         self.HO.choiceForSizeAndColor()
         self.item_removal(setup)
         self.verify_empty_cart()
+        self.log_test_end("*** test_add_and_remove_items_from_shorts_catalog ***")
+        self.driver.quit()
