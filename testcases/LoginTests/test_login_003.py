@@ -10,11 +10,13 @@ from PageObjects.LoginObjects.LoginPageObject import loginObject
 class Test_Login:
     # Initialize class variables with URLs, logger instance, and Excel file path
     URL = ReadProperties.getPageURL()  # Get main page URL from configuration
+    accountURL  = ReadProperties.getAccountURL()
     loginPageUrl = ReadProperties.LoginURL()  # Get login page URL from configuration
     EXISTING_EMAIL = ReadProperties.getEmail()  # Get existing email from configuration
     EXISTING_PASSWORD = ReadProperties.getPassword()  # Get existing password from configuration
     logger = recordLogger.log_generator_info()  # Initialize logger instance
     PATH = ".\\TestData\\LUMA e-commerce Test Plan and Matrix.xlsx"  # Excel file path
+    name_of_account_user = "Ubong Philip"
 
     # Method to log the start of a test
     def log_test_start(self, test_name):
@@ -61,12 +63,13 @@ class Test_Login:
         self.logger.info("*** Collect the entire text of the page body and"
                          " check for the presence of the welcome message "
                          "*****")
+        self.driver.get(self.accountURL)
         text_of_body = self.driver.find_element(By.TAG_NAME, "body").text
-        welcome_text = self.LO.login_alert()
-        self.LO.click_logout()
-        self.driver.quit()
-        assert welcome_text in text_of_body, self.logger.info("*** TEST FAILED: LOGIN PROCESS FAILED ***")
+        time.sleep(5)
+        # name of the account holder
+        assert self.EXISTING_EMAIL in text_of_body, self.logger.info("*** TEST FAILED: LOGIN PROCESS FAILED ***")
         self.logger.info("*** TEST SUCCESSFUL: LOGIN PROCESS SUCCESSFUL ***")
+        self.LO.click_logout()
         self.log_test_end("******* test_valid_login_011*******")
         self.driver.quit()
 
@@ -96,14 +99,15 @@ class Test_Login:
             self.LO.inputPassword(self.password)
             self.logger.info("*** login button click ****")
             self.LO.click_login_button()
-            bodyText = self.driver.find_element(By.TAG_NAME, "body").text
             error_alert = self.LO.error_alert()
-            if error_alert in bodyText:
+            if error_alert == "The account sign-in was incorrect or your account is disabled temporarily. Please wait " \
+                              "and try again later.":
                 if self.expected_title == "pass":
                     actual_result.append("pass")
                 elif self.expected_title == "fail":
                     actual_result.append("fail")
-            elif error_alert not in bodyText:
+            elif error_alert != "The account sign-in was incorrect or your account is disabled temporarily. Please " \
+                                "wait and try again later.":
                 actual_result.append("pass")
 
         print(actual_result, expected_result)

@@ -1,3 +1,4 @@
+import random
 import time
 
 from selenium.webdriver.common.by import By
@@ -14,7 +15,7 @@ class PantsObjects:
                        "//div[@class='swatch-option text' and @role='option'][3]",
                        "//div[@class='swatch-option text' and @role='option'][4]",
                        "//div[@class='swatch-option text' and @role='option'][5]"]
-
+    quantity_input_selector = "[id ='qty']"
     color_list_xpath1 = "//div[@role='listbox' and @aria-labelledby = 'option-label-color-93' ]//div[1]"
     color_list_xpath2 = "//div[@role='listbox' and @aria-labelledby = 'option-label-color-93' ]//div[2]"
     color_list_xpath3 = "//div[@role='listbox' and @aria-labelledby = 'option-label-color-93' ]//div[3]"
@@ -50,3 +51,16 @@ class PantsObjects:
         list_of_prices, list_of_items = returns
 
         return list_of_prices, list_of_items
+
+    def chioce_quantity_for_item(self):
+        choice = random.choice(self.catalogPantsXpath)
+        time.sleep(2)
+
+        sizes = ['32', '33', '34', '35', '36']
+        numbers = [1, 2, 3]
+        common_funtions.choosing_items_quantity(self.driver, sizes, numbers, choice,
+                                                           self.size_list_xpath, self.color_xpaths)
+
+    def quantity_input(self, quantity):
+        self.driver.find_element(By.CSS_SELECTOR, self.quantity_input_selector).clear()
+        self.driver.find_element(By.CSS_SELECTOR, self.quantity_input_selector).send_keys(quantity)

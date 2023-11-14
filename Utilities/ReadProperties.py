@@ -18,6 +18,11 @@ class ReadProperties:
     @staticmethod
     def getCartURL():
         return configs.get("common data", "cartURL")
+
+    @staticmethod
+    def getAccountURL():
+        return configs.get("common data", "accountURL")
+
     @staticmethod
     def getEmail():
         return configs.get("common data", "EXISTING_EMAIL")

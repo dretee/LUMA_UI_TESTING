@@ -74,3 +74,20 @@ def choosing_action_of_items(driver, sizes, numbers, catalogXpath, size_list_xpa
 
     return list_of_prices, list_of_items
 
+
+def choosing_items_quantity(driver, sizes, numbers, catalogXpath, size_list_xpath, color_xpaths):
+    wait = WebDriverWait(driver, 10)
+
+    element = wait.until(EC.element_to_be_clickable((By.XPATH, catalogXpath)))
+    element.click()
+
+    # getting a random size for the item
+    size, number = random.choice(sizes), random.choice(numbers)
+
+    sizePicker(driver, size, size_list_xpath)
+
+    colorPicker(driver, number, color_xpaths)
+
+
+
+

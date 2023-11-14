@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,6 +16,7 @@ class loginObject:
     dropdown_selector = "button[type= 'button']"
     logout_xpath = "//a[contains(text(),'Sign Out')]"
     error_alert_xpath = "//div[@role='alert']/div/div"
+
 
     def __init__(self, driver):
         self.driver = driver
@@ -39,11 +42,13 @@ class loginObject:
 
     def login_alert(self):
         wait = WebDriverWait(self.driver, 10)
+        time.sleep(4)
         alert = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.welcome_message_selector)))
         return alert.text
 
     def error_alert(self):
         wait = WebDriverWait(self.driver, 10)
+        time.sleep(5)
         alert = wait.until(EC.visibility_of_element_located((By.XPATH, self.error_alert_xpath)))
         return alert.text
 
