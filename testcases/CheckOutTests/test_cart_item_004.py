@@ -40,16 +40,19 @@ class Test_checkout_003:
     def test_items_added_to_cart_014(self, setup):
         self.log_test_start("***** test_items_added_to_cart_012 *****")
         self.open_login_to_website(setup)
+        self.driver.get(self.cartURL)
+        self.CO = cartObject(self.driver)
+        self.CO.removeItemsFromCart()
 
         # Navigate to men's pants page and add items to the cart
         self.driver.get(self.MenPantsPageURL)
         self.PO = PantsObjects(self.driver)
-        pants_price_list_for_men, pants_name_list_for_men = self.PO.choiceForSizeAndColor()
+        _, pants_name_list_for_men = self.PO.choiceForSizeAndColor()
 
         # Navigate to women's pants page and add items to the cart
         self.driver.get(self.WomenPantsPageURL)
         self.WPO = WomenPantsObjects(self.driver)
-        pants_price_list_for_women, pants_name_list_for_women = self.WPO.choiceForSizeAndColor()
+        _, pants_name_list_for_women = self.WPO.choiceForSizeAndColor()
 
         # Combine and normalize the names of items in the cart and the displayed items
         general_list_of_name_of_items = pants_name_list_for_women + pants_name_list_for_men

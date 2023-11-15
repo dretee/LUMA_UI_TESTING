@@ -81,7 +81,6 @@ class Test_quantity_of_item_added_to_cart:
                     result.append("FAIL")
                 else:
                     result.append("PASS")
-
             # Check if the input is a float
             elif isinstance(input_value, float):
                 self.PO.quantity_input(input_value)
@@ -95,7 +94,6 @@ class Test_quantity_of_item_added_to_cart:
                     result.append("FAIL")
                 else:
                     result.append("PASS")
-
             # Default case for other inputs
             else:
                 self.PO.quantity_input(input_value)
@@ -109,7 +107,6 @@ class Test_quantity_of_item_added_to_cart:
                     result.append("PASS")
                 else:
                     result.append("FAIL")
-
         print(f"Result list: {result}")
         print(f"Verification list: {verification_list}")
         assert verification_list == result, self.logger.info("*** TEST FAILED: ONE OF THE INPUT WAS LOGGED IN")

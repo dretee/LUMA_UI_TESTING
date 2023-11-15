@@ -48,7 +48,6 @@ class Test_Login:
         self.logger.info("**** TEST PASSED: THE LOGIN PAGE WAS SHOWN ON CLICKING THE LINK")
         self.log_test_end("**** test_functionality_of_the_signin_link_010 *****")
         self.driver.quit()
-
     # Test valid login
     def test_valid_login_011(self, setup):
         self.log_test_start("***** test_valid_login_011 ******")

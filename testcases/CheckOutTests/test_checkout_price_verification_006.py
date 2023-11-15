@@ -66,7 +66,7 @@ class Test_checkout_003:
 
         # Log test result and clean up the cart
         self.logger.info("***** TEST PASSED: THE TOTAL DISPLAYED IS CORRECT *****")
-        self.driver.get(self.cartURL)
+        self.CO = cartObject(self.driver)
         self.CO.removeItemsFromCart()
         self.log_test_end("**** test_checkout_total_013 ****")
         self.driver.quit()
